@@ -7,6 +7,7 @@ Tianyu Zhang, Xin Luo, Li Li, Dong Liu
 
 University of Science and Technology of China
 
+⭐ If StableCodec is helpful to you, please star this repo. Thanks! 🤗
 
 
 ### :hourglass: TODO
@@ -14,11 +15,17 @@ University of Science and Technology of China
 - [x] ~~Update paper link~~
 - [x] ~~Demo~~
 - [x] ~~Pretrained models~~
-- [ ] Code release
+- [x] ~~Code release~~
 
+
+## 📝 Abstract
+
+Diffusion-based image compression has shown remarkable potential for achieving ultra-low bitrate coding (less than 0.05 bits per pixel) with high realism. However, current approaches: (1) Require a large number of denoising steps at the decoder to generate realistic results under extreme bitrate constraints. (2) Sacrifice reconstruction fidelity, as diffusion models typically fail to guarantee pixel-level consistency. To address these challenges, we introduce **StableCodec**, which enables one-step diffusion for high-fidelity and high-realism extreme image compression with improved coding efficiency. To achieve ultra-low bitrates, we first develop an efficient Deep Compression Latent Codec to transmit a noisy latent representation for a single-step denoising process. We then propose a Dual-Branch Coding Structure, consisting of a pair of auxiliary encoder and decoder, to enhance reconstruction fidelity. Furthermore, we adopt end-to-end optimization with joint bitrate and pixel-level constraints. StableCodec outperforms existing methods in terms of FID, KID and DISTS by a significant margin, even at bitrates as low as 0.005 bits per pixel, while maintaining (1) strong fidelity and (2) inference speeds comparable to mainstream transform coding schemes.
 
 
 ## 😍 Visual Results
+
+Compressing high-resolution images for more than 1000 times:
 
 [<img src="assets/0805.jpg" height="300px" width="300px"/>](https://imgsli.com/MzkzNjA5)[<img src="assets/0803.jpg" height="300px" width="310px"/>](https://imgsli.com/MzkzNjEy)[<img src="assets/0880.jpg" height="300px"/>](https://imgsli.com/MzkzNjM1)
 
