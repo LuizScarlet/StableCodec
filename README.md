@@ -52,8 +52,8 @@ pip install -r requirements.txt
 stablecodec_ft2.pkl			# ~ 0.035bpp on Kodak
 stablecodec_ft4.pkl			# ~ 0.025bpp on Kodak
 stablecodec_ft8.pkl			# ~ 0.017bpp on Kodak
-stablecodec_ft16.pkl		# ~ 0.010bpp on Kodak
-stablecodec_ft32.pkl		# ~ 0.005bpp on Kodak
+stablecodec_ft16.pkl		        # ~ 0.010bpp on Kodak
+stablecodec_ft32.pkl		        # ~ 0.005bpp on Kodak
 elic_official.pth			# Pretrained ELIC model for Auxiliary Encoder
 ```
 
