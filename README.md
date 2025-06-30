@@ -9,5 +9,5 @@ University of Science and Technology of China
 - [x] ~~Repo release~~
 - [ ] Demo
 - [ ] Pretrained models
-- [ ] Inference code
-- [ ] Training code
+- [ ] Code release
+
