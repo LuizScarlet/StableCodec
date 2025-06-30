@@ -20,11 +20,11 @@ University of Science and Technology of China
 
 ## 😍 Visual Results
 
-[<img src="assets/0805.jpg" height="300px"/>](https://imgsli.com/MzkzNjA5)[<img src="assets/0803.jpg" height="300px"/>](https://imgsli.com/MzkzNjEy)[<img src="assets/0880.jpg" height="300px"/>](https://imgsli.com/MzkzNjM1)
+[<img src="assets/0805.jpg" height="300px" width="300px"/>](https://imgsli.com/MzkzNjA5)[<img src="assets/0803.jpg" height="300px" width="310px"/>](https://imgsli.com/MzkzNjEy)[<img src="assets/0880.jpg" height="300px"/>](https://imgsli.com/MzkzNjM1)
 
-[<img src="assets/clic1.jpg" height="300px"/>](https://imgsli.com/MzkzNjU5)[<img src="assets/clic2.jpg" height="300px"/>](https://imgsli.com/MzkzNjY5)[<img src="assets/clic3.jpg" height="300px" width="384px"/>](https://imgsli.com/MzkzNjc5)
+[<img src="assets/clic1.jpg" height="300px"/>](https://imgsli.com/MzkzNjU5)[<img src="assets/clic2.jpg" height="300px"/>](https://imgsli.com/MzkzNjY5)[<img src="assets/clic3.jpg" height="300px" width="184px"/>](https://imgsli.com/MzkzNjc5)
 
-[<img src="assets/td1.jpg" width="1015"/>](https://imgsli.com/MzkzNzA1)
+[<img src="assets/td1.jpg" width="815"/>](https://imgsli.com/MzkzNzA1)
 
 
 
@@ -49,12 +49,12 @@ pip install -r requirements.txt
 
 ```bash
 --- List ---
-stablecodec_ft2.pkl		# ~ 0.035bpp on Kodak
-stablecodec_ft4.pkl		# ~ 0.025bpp on Kodak
-stablecodec_ft8.pkl		# ~ 0.017bpp on Kodak
-stablecodec_ft16.pkl	# ~ 0.010bpp on Kodak
-stablecodec_ft32.pkl	# ~ 0.005bpp on Kodak
-elic_official.pth		# Pretrained ELIC model for Auxiliary Encoder
+stablecodec_ft2.pkl			# ~ 0.035bpp on Kodak
+stablecodec_ft4.pkl			# ~ 0.025bpp on Kodak
+stablecodec_ft8.pkl			# ~ 0.017bpp on Kodak
+stablecodec_ft16.pkl		# ~ 0.010bpp on Kodak
+stablecodec_ft32.pkl		# ~ 0.005bpp on Kodak
+elic_official.pth			# Pretrained ELIC model for Auxiliary Encoder
 ```
 
 **Step3: Inference for StableCodec**
