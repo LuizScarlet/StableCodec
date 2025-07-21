@@ -1,3 +1,4 @@
+compressai==1.2.6
 einops>=0.6.1
 numpy>=1.24.4
 open-clip-torch>=2.20.0
