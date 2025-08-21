@@ -31,7 +31,7 @@ Compressing high-resolution images for more than 1000 times:
 
 [<img src="assets/0805.jpg" height="240px"/>](https://imgsli.com/MzkzNjA5)[<img src="assets/0803.jpg" height="240px"/>](https://imgsli.com/MzkzNjEy)[<img src="assets/0880.jpg" height="240px"/>](https://imgsli.com/MzkzNjM1)
 
-[<img src="assets/clic1.jpg" height="300px"/>](https://imgsli.com/MzkzNjU5)[<img src="assets/clic2.jpg" height="300px"/>](https://imgsli.com/MzkzNjY5)[<img src="assets/clic3.jpg" height="300px"/>](https://imgsli.com/MzkzNjc5)
+[<img src="assets/clic1.jpg" height="280px"/>](https://imgsli.com/MzkzNjU5)[<img src="assets/clic2.jpg" height="280px"/>](https://imgsli.com/MzkzNjY5)[<img src="assets/clic3.jpg" height="280px"/>](https://imgsli.com/MzkzNjc5)
 
 [<img src="assets/td1.jpg" width="845"/>](https://imgsli.com/MzkzNzA1)
 
@@ -122,5 +122,6 @@ This work is implemented based on [CompressAI](https://github.com/InterDigitalIn
 If you have any questions, please feel free to drop me an email: 
 
 - zhangtianyu@mail.ustc.edu.cn
+
 
 
