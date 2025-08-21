@@ -104,6 +104,18 @@ bash eval_folders.sh
 Please make sure `recon_dir` and `gt_dir` are specified.
 
 
+## :book: Citation
+
+If you find our work inspiring, please consider citing:
+```bibtex
+@article{zhang2025stablecodec,
+  title={StableCodec: Taming One-Step Diffusion for Extreme Image Compression},
+  author={Zhang, Tianyu and Luo, Xin and Li, Li and Liu, Dong},
+  journal={arXiv preprint arXiv:2506.21977},
+  year={2025}
+}
+```
+
 
 ## :notebook: License
 
@@ -122,6 +134,7 @@ This work is implemented based on [CompressAI](https://github.com/InterDigitalIn
 If you have any questions, please feel free to drop me an email: 
 
 - zhangtianyu@mail.ustc.edu.cn
+
 
 
 
