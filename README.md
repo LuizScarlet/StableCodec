@@ -9,6 +9,8 @@ University of Science and Technology of China
 
 ⭐ If StableCodec is helpful to you, please star this repo. Thanks! 🤗
 
+### :hourglass: News
+[2025/8/21] Training logs and results of StableCodec are now [available](https://github.com/LuizScarlet/StableCodec/issues/4#issuecomment-3208858378). 
 
 ### :hourglass: TODO
 - [x] ~~Repo release~~
