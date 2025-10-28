@@ -1,6 +1,6 @@
 ## StableCodec: Taming One-Step Diffusion for Extreme Image Compression
 
-[![icon](https://img.shields.io/badge/ArXiv-Paper-<COLOR>.svg)](https://arxiv.org/abs/2506.21977) [![python](https://img.shields.io/badge/Python-3.10-3776AB?logo=python&logoColor=white)](https://www.python.org/downloads/release/python-3100/) [![pytorch](https://img.shields.io/badge/PyTorch-2.1-ee4c2c?logo=pytorch&logoColor=white)](https://pytorch.org/get-started/locally/) ![visitors](https://visitor-badge.laobi.icu/badge?page_id=LuizScarlet.StableCodec)
+[![icon](https://img.shields.io/badge/ArXiv-Paper-<COLOR>.svg)](https://arxiv.org/abs/2506.21977) [![icon](https://img.shields.io/badge/ICCV-Paper-<COLOR>.svg)](https://openaccess.thecvf.com/content/ICCV2025/html/Zhang_StableCodec_Taming_One-Step_Diffusion_for_Extreme_Image_Compression_ICCV_2025_paper.html) [![python](https://img.shields.io/badge/Python-3.10-3776AB?logo=python&logoColor=white)](https://www.python.org/downloads/release/python-3100/) [![pytorch](https://img.shields.io/badge/PyTorch-2.1-ee4c2c?logo=pytorch&logoColor=white)](https://pytorch.org/get-started/locally/) ![visitors](https://visitor-badge.laobi.icu/badge?page_id=LuizScarlet.StableCodec)
 
 
 Tianyu Zhang, Xin Luo, Li Li, Dong Liu
@@ -108,11 +108,13 @@ Please make sure `recon_dir` and `gt_dir` are specified.
 
 If you find our work inspiring, please consider citing:
 ```bibtex
-@article{zhang2025stablecodec,
-  title={StableCodec: Taming One-Step Diffusion for Extreme Image Compression},
-  author={Zhang, Tianyu and Luo, Xin and Li, Li and Liu, Dong},
-  journal={arXiv preprint arXiv:2506.21977},
-  year={2025}
+@InProceedings{Zhang_2025_ICCV,
+    author    = {Zhang, Tianyu and Luo, Xin and Li, Li and Liu, Dong},
+    title     = {StableCodec: Taming One-Step Diffusion for Extreme Image Compression},
+    booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
+    month     = {October},
+    year      = {2025},
+    pages     = {17379-17389}
 }
 ```
 
@@ -134,6 +136,7 @@ This work is implemented based on [CompressAI](https://github.com/InterDigitalIn
 If you have any questions, please feel free to drop me an email: 
 
 - zhangtianyu@mail.ustc.edu.cn
+
 
 
 
