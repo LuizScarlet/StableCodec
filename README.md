@@ -51,18 +51,26 @@ pip install -r requirements.txt
 ## ⚡ Inference
 
 **Step1: Prepare your datasets for inference**
+```
+<PATH_TO_DATASET>/*.png
+```
 
-**Step2: Download the pretrained models**
+**Step2: Download pretrained models**
 
 1. Download [SD-Turbo](https://huggingface.co/stabilityai/sd-turbo).
 2. Download [checkpoints](https://drive.google.com/drive/folders/1itiVVAPSTATGPcHLp_bLI9r9Qi3YcM12?usp=sharing) for StableCodec and Auxiliary Encoder ([ELIC](https://arxiv.org/abs/2203.10886)):
 
 ```bash
 --- List ---
+stablecodec_base.pkl		# A base model for Stage 2 finetuning
 stablecodec_ft2.pkl			# ~ 0.035bpp on Kodak
+stablecodec_ft3.pkl			# ~ 0.029bpp on Kodak
 stablecodec_ft4.pkl			# ~ 0.025bpp on Kodak
+stablecodec_ft6.pkl			# ~ 0.020bpp on Kodak
 stablecodec_ft8.pkl			# ~ 0.017bpp on Kodak
+stablecodec_ft12.pkl		# ~ 0.013bpp on Kodak
 stablecodec_ft16.pkl		# ~ 0.010bpp on Kodak
+stablecodec_ft24.pkl		# ~ 0.075bpp on Kodak
 stablecodec_ft32.pkl		# ~ 0.005bpp on Kodak
 elic_official.pth			# Pretrained ELIC model for Auxiliary Encoder
 ```
@@ -137,6 +145,7 @@ This work is implemented based on [CompressAI](https://github.com/InterDigitalIn
 If you have any questions, please feel free to drop me an email: 
 
 - zhangtianyu@mail.ustc.edu.cn
+
 
 
 
