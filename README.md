@@ -10,7 +10,7 @@ University of Science and Technology of China
 ⭐ If StableCodec is helpful to you, please star this repo. Thanks! 🤗
 
 ### :hourglass: News
-[2025/12/29] Release additional [checkpoints](https://drive.google.com/drive/folders/1itiVVAPSTATGPcHLp_bLI9r9Qi3YcM12?usp=sharing) for training and inference.
+[2025/12/29] Release additional [checkpoints](https://drive.google.com/drive/folders/1itiVVAPSTATGPcHLp_bLI9r9Qi3YcM12?usp=sharing) for training and inference.  
 [2025/08/21] Training logs and reported results are now available, see `results/`. 
 
 ### :hourglass: TODO
@@ -198,6 +198,7 @@ This work is implemented based on [CompressAI](https://github.com/InterDigitalIn
 If you have any questions, please feel free to drop me an email: 
 
 - zhangtianyu@mail.ustc.edu.cn
+
 
 
 
