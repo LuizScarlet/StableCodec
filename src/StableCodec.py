@@ -68,7 +68,7 @@ class StableCodec(torch.nn.Module):
         print("[LoRA]: Done!")
 
         print("[Latent Codec]: Initializing Latent Codec ......")
-        self.codec = LatentCodec()
+        self.codec = LatentCodec(args.lambda_rate)
         temp_layer = nn.Conv2d(320, 320, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
         self.unet.conv_in = temp_layer
         print("[Latent Codec]: Done!")
@@ -110,11 +110,57 @@ class StableCodec(torch.nn.Module):
         caption_tokens = self.tokenizer(pos_prompt, max_length=self.tokenizer.model_max_length, padding="max_length", truncation=True, return_tensors="pt").input_ids.cuda()
         self.pos_caption_enc = self.text_encoder(caption_tokens)[0]
 
-    def compress(self, c_t):
+    def set_eval(self):
+        self.unet.eval()
+        self.vae.eval()
+        self.codec.eval()
+        self.unet.requires_grad_(False)
+        self.vae.requires_grad_(False)
+        self.codec.requires_grad_(False)
+
+    def set_train(self):
+        self.unet.train()
+        self.vae.train()
+        self.codec.train()
+        self.unet.requires_grad_(False)
+        self.vae.requires_grad_(False)
+        self.codec.requires_grad_(True)
+
+        for n, _p in self.unet.named_parameters():
+            if "lora" in n:
+                _p.requires_grad = True
+        self.unet.conv_in.requires_grad_(True)
+
+        for n, _p in self.vae.named_parameters():
+            if "lora" in n:
+                _p.requires_grad = True
+
+    def forward(self, x, pos_prompt, ori_h, ori_w):
+
+        # Encoder
+        with torch.no_grad():
+            latent2 = self.aux_codec((x + 1) / 2).detach()
+            pos_caption_enc = [self.pos_caption_enc for i in range(len(pos_prompt))]
+            pos_caption_enc = torch.cat(pos_caption_enc, dim=0).to(x.device)
+        lq_latent = self.vae.encode(x).latent_dist.mode() * self.vae.config.scaling_factor
+
+        # Latent Codec
+        lq_latent_hat, RateLossOutput, res1 = self.codec(lq_latent, latent2, ori_h, ori_w)
+
+        # One-Step Denoiser
+        model_pred = self.unet(lq_latent_hat, self.timesteps, encoder_hidden_states=pos_caption_enc).sample
+        x_denoised = self.sched.step(model_pred, self.timesteps, lq_latent_hat[:, :4], return_dict=True).prev_sample + res1
+
+        # Decoder
+        output_image = (self.vae.decode(x_denoised / self.vae.config.scaling_factor).sample).clamp(-1, 1)
+
+        return output_image, RateLossOutput
+
+    def compress(self, x):
         
         # Encoder
-        latent2 = self.aux_codec((c_t + 1) / 2).detach()
-        lq_latent = self.vae.encode(c_t).latent_dist.mode() * self.vae.config.scaling_factor
+        latent2 = self.aux_codec((x + 1) / 2).detach()
+        lq_latent = self.vae.encode(x).latent_dist.mode() * self.vae.config.scaling_factor
 
         # Latent Codec - Entropy Encoding
         output_dict = self.codec.compress(lq_latent, latent2)
@@ -205,6 +251,13 @@ class StableCodec(torch.nn.Module):
         output_image = (self.vae.decode(x_denoised / self.vae.config.scaling_factor).sample).clamp(-1, 1)
 
         return output_image
+    
+    def save_model(self, outf):
+        sd = {}
+        sd["state_dict_vae"] = {k: v for k, v in self.vae.state_dict().items() if "lora" in k}
+        sd["state_dict_unet"] = {k: v for k, v in self.unet.state_dict().items() if "lora" in k or "conv_in" in k}
+        sd["state_dict_codec"] = {k: v for k, v in self.codec.state_dict().items()}
+        torch.save(sd, outf)
     
     def _set_latent_tile(self, latent_tiled_size = 96, latent_tiled_overlap = 32):
         self.latent_tiled_size = latent_tiled_size

@@ -5,18 +5,18 @@ def parse_args_testing(input_args=None):
     parser = argparse.ArgumentParser()
 
     # pretrained weights
-    parser.add_argument("--sd_path", help="path to SD-Turbo")
-    parser.add_argument("--elic_path", help="path to pretrained ELIC model")
-    parser.add_argument("--codec_path", help="path to pretrained StableCodec weights", default=None)
+    parser.add_argument("--sd_path", required=True, help="Path to SD-Turbo")
+    parser.add_argument("--elic_path", required=True, help="Path to pretrained ELIC model")
+    parser.add_argument("--codec_path", required=True, help="Path to pretrained StableCodec weights", default=None)
 
     # testing images
-    parser.add_argument("--img_path", type=str, default='/data/Kodak/')
+    parser.add_argument("--img_path", type=str, required=True, default='/data/Kodak/')
 
     # output path
-    parser.add_argument("--rec_path", type=str, default='/output/rec/')
-    parser.add_argument("--bin_path", type=str, default='/output/bin/')
+    parser.add_argument("--rec_path", type=str, required=True, default='/output/rec/')
+    parser.add_argument("--bin_path", type=str, required=True, default='/output/bin/')
 
-    # details about the model architecture
+    # model details
     parser.add_argument("--lora_rank_unet", default=32, type=int)
     parser.add_argument("--lora_rank_vae", default=16, type=int)
     parser.add_argument("--vae_decoder_tiled_size", type=int, default=160)
@@ -32,6 +32,7 @@ def parse_args_testing(input_args=None):
     parser.add_argument('--world_size', default=1, type=int, help='number of distributed processes')
     parser.add_argument('--local_rank', default=-1, type=int)
     parser.add_argument('--dist_url', default='env://', help='url used to set up distributed training')
+    parser.add_argument("--lambda_rate", default=0.5, type=float)
     parser.add_argument("--color_fix", action="store_true",)
 
     if input_args is not None:

@@ -10,7 +10,8 @@ University of Science and Technology of China
 ⭐ If StableCodec is helpful to you, please star this repo. Thanks! 🤗
 
 ### :hourglass: News
-[2025/8/21] Training logs and results of StableCodec are now [available](https://github.com/LuizScarlet/StableCodec/issues/4#issuecomment-3208858378). 
+[2025/12/29] Release additional [checkpoints](https://drive.google.com/drive/folders/1itiVVAPSTATGPcHLp_bLI9r9Qi3YcM12?usp=sharing) for training and inference.
+[2025/08/21] Training logs and reported results are now available, see `results/`. 
 
 ### :hourglass: TODO
 - [x] ~~Repo release~~
@@ -18,7 +19,7 @@ University of Science and Technology of China
 - [x] ~~Demo~~
 - [x] ~~Pretrained models~~
 - [x] ~~Inference~~
-- [ ] Training
+- [x] ~~Training~~
 
 
 ## 📝 Abstract
@@ -26,7 +27,11 @@ University of Science and Technology of China
 Diffusion-based image compression has shown remarkable potential for achieving ultra-low bitrate coding (less than 0.05 bits per pixel) with high realism. However, current approaches: (1) Require a large number of denoising steps at the decoder to generate realistic results under extreme bitrate constraints. (2) Sacrifice reconstruction fidelity, as diffusion models typically fail to guarantee pixel-level consistency. To address these challenges, we introduce **StableCodec**, which enables one-step diffusion for high-fidelity and high-realism extreme image compression with improved coding efficiency. To achieve ultra-low bitrates, we first develop an efficient Deep Compression Latent Codec to transmit a noisy latent representation for a single-step denoising process. We then propose a Dual-Branch Coding Structure, consisting of a pair of auxiliary encoder and decoder, to enhance reconstruction fidelity. Furthermore, we adopt end-to-end optimization with joint bitrate and pixel-level constraints. StableCodec outperforms existing methods in terms of FID, KID and DISTS by a significant margin, even at bitrates as low as 0.005 bits per pixel, while maintaining (1) strong fidelity and (2) inference speeds comparable to mainstream transform coding schemes.
 
 
-## 😍 Visual Results
+## 😍 Main Results
+
+Rate-distortion-perception comparison on benchmarks:
+
+[<img src="assets/rdp.png" width="800"/>](https://imgsli.com/MzkzNjU5)
 
 Compressing high-resolution images for more than 1000 times:
 
@@ -35,7 +40,6 @@ Compressing high-resolution images for more than 1000 times:
 [<img src="assets/clic1.jpg" height="280px"/>](https://imgsli.com/MzkzNjU5)[<img src="assets/clic2.jpg" height="280px"/>](https://imgsli.com/MzkzNjY5)[<img src="assets/clic3.jpg" height="280px"/>](https://imgsli.com/MzkzNjc5)
 
 [<img src="assets/td1.jpg" width="845"/>](https://imgsli.com/MzkzNzA1)
-
 
 
 ## ⚙ Installation
@@ -50,12 +54,12 @@ pip install -r requirements.txt
 
 ## ⚡ Inference
 
-**Step1: Prepare your datasets for inference**
+**Step 1: Prepare your datasets for inference**
 ```
 <PATH_TO_DATASET>/*.png
 ```
 
-**Step2: Download pretrained models**
+**Step 2: Download pretrained models**
 
 1. Download [SD-Turbo](https://huggingface.co/stabilityai/sd-turbo).
 2. Download [checkpoints](https://drive.google.com/drive/folders/1itiVVAPSTATGPcHLp_bLI9r9Qi3YcM12?usp=sharing) for StableCodec and Auxiliary Encoder ([ELIC](https://arxiv.org/abs/2203.10886)):
@@ -75,7 +79,7 @@ stablecodec_ft32.pkl		# ~ 0.005bpp on Kodak
 elic_official.pth			# Pretrained ELIC model for Auxiliary Encoder
 ```
 
-**Step3: Inference for StableCodec**
+**Step 3: Inference for StableCodec**
 
 Please modify the paths in `compress.sh`:
 
@@ -90,7 +94,7 @@ python src/compress.py \
     # --color_fix
 ```
 
-*Note: Color fix is recommended when inferring high-resolution images with tiling.* 
+*Note: Color fix is recommended when inferring high-resolution images with tiling (e.g., DIV2K, CLIC 2020).* 
 
 Then run:
 
@@ -112,6 +116,55 @@ bash eval_folders.sh
 
 Please make sure `recon_dir` and `gt_dir` are specified.
 
+
+## 🔥 Training
+
+We perform training on `2x RTX 3090 (24G)` GPUs.
+
+**Stage 1: Train a base model with relaxed bitrates**
+
+*Note: You may skip Stage 1 with our pretrained [stablecodec_base.pkl](https://drive.google.com/drive/folders/1itiVVAPSTATGPcHLp_bLI9r9Qi3YcM12?usp=sharing).* 
+
+Please modify the paths in `train.sh`:
+
+```bash
+accelerate launch --num_processes=2 --gpu_ids="0,1," --main_process_port 29300 src/train.py \
+    --sd_path="<PATH_TO_SD_TURBO>/sd-turbo" \
+    --elic_path="<PATH_TO_ELIC>/elic_official.pth" \
+    --train_dataset="<PATH_TO_DATASET>/dataset.hdf5" \
+    --test_dataset="<PATH_TO_DATASET>/Kodak/" \
+    --output_dir="<PATH_TO_SAVE_OUTPUTS>/" \
+    --max_train_steps 120000 \
+    --lambda_rate 0.5
+```
+
+Then run:
+
+```bash
+bash train.sh
+```
+
+**Stage 2: Finetune the base model with GAN and target extreme bitrates**
+
+Please modify the paths in `finetune.sh`:
+
+```bash
+accelerate launch --num_processes=2 --gpu_ids="0,1," --main_process_port 29300 src/finetune.py \
+    --sd_path="<PATH_TO_SD_TURBO>/sd-turbo" \
+    --elic_path="<PATH_TO_ELIC>/elic_official.pth" \
+    --codec_path="<PATH_TO_STABLECODEC>/stablecodec_base.pkl" \
+    --train_dataset="<PATH_TO_DATASET>/dataset.hdf5" \
+    --test_dataset="<PATH_TO_DATASET>/Kodak/" \
+    --output_dir="<PATH_TO_SAVE_OUTPUTS>/" \
+    --max_train_steps 21000 \
+    --lambda_rate 2 # [2, 3, 4, 6, 8, 12, 16, 24, 32]
+```
+
+Then run:
+
+```bash
+bash finetune.sh
+```
 
 ## :book: Citation
 

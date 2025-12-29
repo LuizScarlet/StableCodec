@@ -1,3 +1,4 @@
+accelerate==1.9.0
 compressai==1.2.6
 einops>=0.6.1
 numpy>=1.24.4
@@ -5,7 +6,7 @@ open-clip-torch>=2.20.0
 opencv-python==4.6.0.66
 pillow>=9.5.0
 scipy
-timm
+timm==1.0.22
 tokenizers
 
 torch==2.1.2

@@ -17,7 +17,7 @@ from my_utils.testing_utils import parse_args_testing
 from color_fix import adain_color_fix_quant
 from StableCodec import StableCodec
 from PIL import Image
-from compress_utils import *
+from my_utils.compress_utils import *
 
 
 def preprocess_image(image_path, transform):
