@@ -3,13 +3,14 @@
 [![icon](https://img.shields.io/badge/ArXiv-Paper-<COLOR>.svg)](https://arxiv.org/abs/2506.21977) [![icon](https://img.shields.io/badge/ICCV-Paper-<COLOR>.svg)](https://openaccess.thecvf.com/content/ICCV2025/html/Zhang_StableCodec_Taming_One-Step_Diffusion_for_Extreme_Image_Compression_ICCV_2025_paper.html) [![python](https://img.shields.io/badge/Python-3.10-3776AB?logo=python&logoColor=white)](https://www.python.org/downloads/release/python-3100/) [![pytorch](https://img.shields.io/badge/PyTorch-2.1-ee4c2c?logo=pytorch&logoColor=white)](https://pytorch.org/get-started/locally/) ![visitors](https://visitor-badge.laobi.icu/badge?page_id=LuizScarlet.StableCodec)
 
 
-Tianyu Zhang, Xin Luo, Li Li, Dong Liu
+***Tianyu Zhang, Xin Luo, Li Li, Dong Liu***
 
-University of Science and Technology of China
+***University of Science and Technology of China***
 
-⭐ If StableCodec is helpful to you, please star this repo. Thanks! 🤗
+⭐ **If StableCodec is helpful to you, please star this repo. Thanks!** 🤗
 
-### :hourglass: News
+### :hourglass: Updates
+**[2025/12/30] Release all source code. Leave it in 2025!**  
 [2025/12/29] Release additional [checkpoints](https://drive.google.com/drive/folders/1itiVVAPSTATGPcHLp_bLI9r9Qi3YcM12?usp=sharing) for training and inference.  
 [2025/08/21] Training logs and reported results are now available, see `results/`. 
 
@@ -58,6 +59,10 @@ pip install -r requirements.txt
 ```
 <PATH_TO_DATASET>/*.png
 ```
+In our paper, we adopt the following test datasets: 
+- [Kodak](https://r0k.us/graphics/kodak/): Contains 24 natural images with 512x768 pixels.
+- [DIV2K Validation Set](https://data.vision.ee.ethz.ch/cvl/DIV2K/): Contains 100 2K-resolution images.
+- [CLIC 2020 Test Set](https://archive.compression.cc/challenge/): Contains 428 2K-resolution images.
 
 **Step 2: Download pretrained models**
 
@@ -119,7 +124,18 @@ Please make sure `recon_dir` and `gt_dir` are specified.
 
 ## 🔥 Training
 
-We perform training on `2x RTX 3090 (24G)` GPUs.
+**Preparations**
+
+We perform lightweight training on `2x RTX 3090 (24G)` GPUs. Consider adjusting `train_batch_size` and `gradient_accumulation_steps` in `src/my_utils/training_utils.py` for faster or better training performance.  
+
+Our training data includes:  
+- [Flickr2K](https://github.com/LimBee/NTIRE2017): Contains 2560 2K-resolution images.
+- [DIV2K Training Set](https://data.vision.ee.ethz.ch/cvl/DIV2K/): Contains 800 2K-resolution images.
+- [CLIC](https://archive.compression.cc/challenge/): Contains 585 (CLIC 2020 Training) + 41 (CLIC 2020 Validation) + 60 (CLIC 2021 Test) 2K-resolution images.
+
+We use `h5py` to organize training data. To construct a `.hdf5` training file, please refer to `src/my_utils/build_h5.py`.
+
+*Note: An empirical finding suggests adding additional training data in Stage 1 improves stability. We adopt the first 10K images from [LSDIR](https://huggingface.co/ofsoundof/LSDIR/tree/main).* 
 
 **Stage 1: Train a base model with relaxed bitrates**
 
@@ -198,6 +214,7 @@ This work is implemented based on [CompressAI](https://github.com/InterDigitalIn
 If you have any questions, please feel free to drop me an email: 
 
 - zhangtianyu@mail.ustc.edu.cn
+
 
 
 
