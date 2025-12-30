@@ -213,7 +213,8 @@ This work is implemented based on [CompressAI](https://github.com/InterDigitalIn
 
 If you have any questions, please feel free to drop me an email: 
 
-- zhangtianyu@mail.ustc.edu.cn
+- zhangtianyu[at]mail.ustc.edu.cn
+
 
 
 
