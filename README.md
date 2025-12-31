@@ -79,7 +79,7 @@ stablecodec_ft6.pkl			# ~ 0.020bpp on Kodak
 stablecodec_ft8.pkl			# ~ 0.017bpp on Kodak
 stablecodec_ft12.pkl		# ~ 0.013bpp on Kodak
 stablecodec_ft16.pkl		# ~ 0.010bpp on Kodak
-stablecodec_ft24.pkl		# ~ 0.075bpp on Kodak
+stablecodec_ft24.pkl		# ~ 0.008bpp on Kodak
 stablecodec_ft32.pkl		# ~ 0.005bpp on Kodak
 elic_official.pth			# Pretrained ELIC model for Auxiliary Encoder
 ```
@@ -214,6 +214,7 @@ This work is implemented based on [CompressAI](https://github.com/InterDigitalIn
 If you have any questions, please feel free to drop me an email: 
 
 - zhangtianyu[at]mail.ustc.edu.cn
+
 
 
 
