@@ -9,8 +9,9 @@
 
 ⭐ **If StableCodec is helpful to you, please star this repo. Thanks!** 🤗
 
-### :hourglass: Updates
-**[2025/12/30] Release all source code. Leave it in 2025!**  
+### :hourglass: Updates  
+**[2026/03/11] :open_mouth: We propose [Asymmetric Extreme Image Compression (AEIC)](https://github.com/LuizScarlet/AEIC), an improved version of StableCodec exploring the feasibility of applying shallow encoders for ultra-low bitrate image compression. Check it out!**  
+[2025/12/30] Release all source code. Leave it in 2025!  
 [2025/12/29] Release additional [checkpoints](https://drive.google.com/drive/folders/1itiVVAPSTATGPcHLp_bLI9r9Qi3YcM12?usp=sharing) for training and inference.  
 [2025/08/21] Training logs and reported results are now available, see `results/`. 
 
@@ -214,6 +215,7 @@ This work is implemented based on [CompressAI](https://github.com/InterDigitalIn
 If you have any questions, please feel free to drop me an email: 
 
 - zhangtianyu[at]mail.ustc.edu.cn
+
 
 
 
