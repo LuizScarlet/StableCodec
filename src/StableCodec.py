@@ -11,6 +11,50 @@ sys.path.append("..")
 from ELIC.model.elic_official import ELIC
 
 
+def _remap_entropy_bottleneck_keys(checkpoint_state, target_state):
+    key_pairs = (
+        ("_matrix", "matrices"),
+        ("_bias", "biases"),
+        ("_factor", "factors"),
+    )
+    remapped_state = dict(checkpoint_state)
+    converted = 0
+
+    for old_prefix, new_prefix in key_pairs:
+        idx = 0
+        while True:
+            old_key = f"entropy_bottleneck.{old_prefix}{idx}"
+            new_key = f"entropy_bottleneck.{new_prefix}.{idx}"
+            if old_key not in checkpoint_state:
+                break
+            if new_key in target_state:
+                remapped_state[new_key] = checkpoint_state[old_key]
+                if old_key not in target_state:
+                    remapped_state.pop(old_key, None)
+                converted += 1
+            idx += 1
+
+    if converted:
+        print(
+            "[Checkpoint]: Remapped legacy EntropyBottleneck keys "
+            f"for current CompressAI ({converted} tensors)."
+        )
+
+    return remapped_state
+
+
+def _merge_checkpoint_state(target_state, checkpoint_state):
+    checkpoint_state = _remap_entropy_bottleneck_keys(checkpoint_state, target_state)
+    skipped = 0
+    for k in checkpoint_state:
+        if k in target_state:
+            target_state[k] = checkpoint_state[k]
+        else:
+            skipped += 1
+    if skipped:
+        print(f"[Checkpoint]: Skipped {skipped} tensors not used by current model.")
+    return target_state
+
 class StableCodec(torch.nn.Module):
     def __init__(self, sd_path=None, args=None):
         super().__init__()
@@ -82,8 +126,7 @@ class StableCodec(torch.nn.Module):
             print("[LoRA & Latent Codec & Auxiliary Decoder]: Loading Pretrained Weights ......")
             sd = torch.load(args.codec_path, map_location="cpu")
             _sd_codec = self.codec.state_dict()
-            for k in sd["state_dict_codec"]:
-                _sd_codec[k] = sd["state_dict_codec"][k]
+            _sd_codec = _merge_checkpoint_state(_sd_codec, sd["state_dict_codec"])
             self.codec.load_state_dict(_sd_codec)
 
             _sd_vae = self.vae.state_dict()
